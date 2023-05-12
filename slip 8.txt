@@ -1,0 +1,74 @@
+1.
+
+
+import java.io.*;
+import java.lang.String.*;
+class A2A1 extends Thread
+{
+  String msg;
+  int n;
+  public A2A1(String msg,int n)
+  {
+  this.msg=msg;
+  this.n=n;
+  }
+  public void run()
+  {
+  
+  for(int i=1;i<=this.n;i++)
+  {
+  System.out.println(i + "\t"+this.msg);
+  }
+  }
+ 
+   public static void main(String Args[])
+   {
+
+   A2A1 t1=new A2A1("COVID19",10);
+   t1.start();
+   A2A1 t2=new A2A1("LOCKDOWN2020",20);
+   t2.start();
+   A2A1 t3=new A2A1("VACCINATED2021",30);
+   t3.start();
+   }
+   }
+   
+  
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+2.
+
+<%@ page language="java" %>
+<html>
+<head>
+<title>Prime Number Checker</title>
+</head>
+<body>
+<%
+int num = Integer.parseInt(request.getParameter("num"));
+boolean isPrime = true;
+
+if(num < 2) {
+  isPrime = false;
+} else {
+  for(int i=2; i<=Math.sqrt(num); i++) {
+    if(num%i == 0) {
+      isPrime = false;
+      break;
+    }
+  }
+}
+
+if(isPrime) {
+%>
+<p style="color:red;"><%= num %> is a prime number.</p>
+<%
+} else {
+%>
+<p style="color:red;"><%= num %> is not a prime number.</p>
+<%
+}
+%>
+</body>
+</html>

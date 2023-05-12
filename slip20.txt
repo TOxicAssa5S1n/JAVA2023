@@ -1,0 +1,96 @@
+1. 
+import java.awt.Color;import java.awt.Dimension; 
+import java.awt.Graphics;import javax.swing.JFrame; 
+import javax.swing.JPanel; 
+public class IndianFlag extends JPanel implements Runnable {   
+  private static final int WIDTH = 900;  private static final int HEIGHT = 600; 
+  private static Color ORANGE = new Color(255, 153, 51);  private static final Color WHITE = Color.WHITE; 
+  private static Color GREEN = new Color(19, 136, 8);  private static final int DELAY = 1000; 
+    private int flagWidth; 
+  private int flagHeight;  private int centerX; 
+  private int centerY;  private int stripeHeight; 
+  private int chakraRadius;  private int chakraDiameter; 
+    public IndianFlag() { 
+    setPreferredSize(new Dimension(WIDTH, HEIGHT));    flagWidth = 3 * WIDTH / 5; 
+    flagHeight = 2 * HEIGHT / 5;    centerX = WIDTH / 2; 
+    centerY = HEIGHT / 2;    stripeHeight = flagHeight / 3; 
+    chakraRadius = stripeHeight / 2;    chakraDiameter = 2 * chakraRadius; 
+  }   
+  @Override  public void paintComponent(Graphics g) { 
+    super.paintComponent(g);    drawFlag(g); 
+  }   
+  private void drawFlag(Graphics g) {    g.setColor(ORANGE); 
+    g.fillRect(centerX - flagWidth / 2, centerY - flagHeight / 2, flagWidth, stripeHeight);    g.setColor(WHITE); 
+    g.fillRect(centerX - flagWidth / 2, centerY - stripeHeight / 2, flagWidth, stripeHeight);    g.setColor(GREEN); 
+    g.fillRect(centerX - flagWidth / 2, centerY + stripeHeight / 2, flagWidth, stripeHeight);    drawChakra(g); 
+  }   
+  private void drawChakra(Graphics g) {    g.setColor(WHITE); 
+    g.fillOval(centerX - chakraRadius, centerY - chakraRadius, chakraDiameter, chakraDiameter);    g.setColor(WHITE); 
+    for (int i = 0; i < 24; i++) {      int x = (int) (centerX + chakraRadius * Math.cos(Math.toRadians(i * 15))); 
+      int y = (int) (centerY - chakraRadius * Math.sin(Math.toRadians(i * 15)));      g.fillRect(x, y, 2, 2); 
+    }  } 
+    @Override 
+  public void run() {    while (true) { 
+      try {        Thread.sleep(DELAY); 
+        switchColors();        repaint(); 
+      } catch (InterruptedException e) {        e.printStackTrace(); 
+      }    } 
+  }   
+  private void switchColors() {    
+  //Color temp = ORANGE; 
+  //  ORANGE = GREEN;     
+  //  GREEN = WHITE; 
+//    WHITE = temp;  
+    } 
+    public static void main(String[] args) { 
+    JFrame frame = new JFrame("Indian Flag");    IndianFlag indianFlag = new IndianFlag(); 
+    frame.add(indianFlag);    frame.pack(); 
+    frame.setLocationRelativeTo(null);    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    frame.setVisible(true);    Thread thread = new Thread(indianFlag); 
+    thread.start();  } 
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+2
+
+import java.sql.*;
+
+public class ScrollableResultSetExample {
+   public static void main(String[] args) {
+      String url = "jdbc:postgresql://localhost:5432/mydatabase"; // replace mydatabase with your database name
+      String user = "username"; // replace username with your PostgreSQL username
+      String password = "password"; // replace password with your PostgreSQL password
+
+      try (Connection con = DriverManager.getConnection(url, user, password);
+         Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+         ResultSet rs = stmt.executeQuery("SELECT * FROM Teacher")) {
+
+         while (rs.next()) {
+            int tid = rs.getInt("TID");
+            String name = rs.getString("TName");
+            double salary = rs.getDouble("Salary");
+            System.out.println(tid + "\t" + name + "\t" + salary);
+         }
+
+         System.out.println("\nPrinting the ResultSet in reverse order using previous() method:");
+         rs.afterLast(); // move the cursor to the end of the ResultSet
+         while (rs.previous()) {
+            int tid = rs.getInt("TID");
+            String name = rs.getString("TName");
+            double salary = rs.getDouble("Salary");
+            System.out.println(tid + "\t" + name + "\t" + salary);
+         }
+
+         System.out.println("\nMoving the cursor to the 4th row using absolute() method:");
+         rs.absolute(4);
+         int tid = rs.getInt("TID");
+         String name = rs.getString("TName");
+         double salary = rs.getDouble("Salary");
+         System.out.println(tid + "\t" + name + "\t" + salary);
+
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+   }
+}

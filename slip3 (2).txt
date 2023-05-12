@@ -1,0 +1,70 @@
+1
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Patients Details</title>
+</head>
+<body>
+	<h1>Patients Details</h1>
+	<table border="1">
+		<tr>
+			<th>PNo</th>
+			<th>PName</th>
+			<th>Address</th>
+			<th>Age</th>
+			<th>Disease</th>
+		</tr>
+		<%
+			// Create an array of patients with their details
+			String[][] patients = { 
+				{ "P001", "John Doe", "123 Main St, Anytown USA", "45", "Flu" },
+				{ "P002", "Jane Smith", "456 Elm St, Anytown USA", "32", "Headache" },
+				{ "P003", "Bob Johnson", "789 Oak St, Anytown USA", "55", "Arthritis" }
+			};
+			
+			// Loop through the patients array and display each patient's details in a row of the table
+			for (String[] patient : patients) {
+				out.println("<tr>");
+				for (String detail : patient) {
+					out.println("<td>" + detail + "</td>");
+				}
+				out.println("</tr>");
+			}
+		%>
+	</table>
+</body>
+</html>
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+2.
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class C2 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LinkedList<Object> ll = new LinkedList<>();
+        ll.add(1);
+        ll.add(2);
+        ll.add(3);
+
+        System.out.println("\nElements in List :\n" + ll);
+
+        ll.addFirst(0);
+
+        System.out.println("\nList after adding Elements at First :\n" + ll);
+
+        ll.removeLast();
+
+        System.out.println("\nList after deleting Last Element :\n" + ll);
+
+        System.out.println("\nSize of the List :\n" + ll.size());
+
+        sc.close();
+    }
+}
+

@@ -1,0 +1,97 @@
+1.
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class NegativeIntegersLinkedList {
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the number of integers to be entered: ");
+        int n = sc.nextInt();
+        
+        LinkedList<Integer> list = new LinkedList<>();
+        
+        System.out.println("Enter the integers:");
+        for(int i=0; i<n; i++) {
+            int num = sc.nextInt();
+            list.add(num);
+        }
+        
+        System.out.println("Negative integers:");
+        for(int i=0; i<n; i++) {
+            int num = list.get(i);
+            if(num < 0) {
+                System.out.print(num + " ");
+            }
+        }
+        
+        sc.close();
+    }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+2.
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.sql.*;
+
+public class LoginServlet extends HttpServlet {
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+    String username = request.getParameter("username");
+    String password = request.getParameter("password");
+
+    // Connect to the database
+    String url = "jdbc:postgresql://localhost/mydatabase";
+    String dbUsername = "myusername";
+    String dbPassword = "mypassword";
+    try {
+      Class.forName("org.postgresql.Driver");
+      Connection conn = DriverManager.getConnection(url, dbUsername, dbPassword);
+
+      // Query the database for the username and password
+      PreparedStatement stmt = conn.prepareStatement("SELECT * FROM users WHERE username = ? AND password = ?");
+      stmt.setString(1, username);
+      stmt.setString(2, password);
+      ResultSet rs = stmt.executeQuery();
+
+      if (rs.next()) {
+        // If the username and password are found, display a success message
+        out.println("<html>");
+        out.println("<head><title>Login Successful</title></head>");
+        out.println("<body>");
+        out.println("<h1>Login Successful</h1>");
+        out.println("<p>Welcome, " + username + "!</p>");
+        out.println("</body></html>");
+      } else {
+        // If the username and password are not found, display an error message
+        out.println("<html>");
+        out.println("<head><title>Login Error</title></head>");
+        out.println("<body>");
+        out.println("<h1>Login Error</h1>");
+        out.println("<p>Incorrect username or password.</p>");
+        out.println("</body></html>");
+      }
+
+      // Close the database connection
+      conn.close();
+    } catch (Exception e) {
+      // If there is an error, display an error message
+      out.println("<html>");
+      out.println("<head><title>Login Error</title></head>");
+      out.println("<body>");
+      out.println("<h1>Login Error</h1>");
+      out.println("<p>" + e.getMessage() + "</p>");
+      out.println("</body></html>");
+    }
+  }
+}
